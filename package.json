@@ -9,8 +9,8 @@
     "build": "webpack --env dev && webpack --env build && bundlesize",
     "prepublishOnly": "npm run -s build",
     "bundlesize": "bundlesize",
-    "release": "npm publish --access=public",
-    "release-it--dry-run": "release-it minor --dry-run"
+    "release": "release-it minor",
+    "release:dry-run": "release-it minor --dry-run"
   },
   "keywords": [
     "requestIdleCallback",
