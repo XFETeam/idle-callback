@@ -1,0 +1,22 @@
+const requestIdleCallback = (window.requestIdleCallback =
+  window.requestIdleCallback ||
+  function (handler) {
+    let startTime = Date.now();
+
+    return setTimeout(function () {
+      handler({
+        didTimeout: false,
+        timeRemaining: function () {
+          return Math.max(0, 50.0 - (Date.now() - startTime));
+        }
+      });
+    }, 1);
+  });
+
+const cancelIdleCallback = (window.cancelIdleCallback =
+  window.cancelIdleCallback ||
+  function (id) {
+    clearTimeout(id);
+  });
+
+export { requestIdleCallback, cancelIdleCallback };
