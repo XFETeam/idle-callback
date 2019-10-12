@@ -6,7 +6,7 @@
   "main": "lib/@xfe-team/idle-callback.min.js",
   "scripts": {
     "start": "webpack --progress --colors --watch --env dev",
-    "build": "webpack --env dev && webpack --env build && bundlesize",
+    "build": "rimraf lib && webpack --env dev && webpack --env build && bundlesize && git add lib",
     "prepublishOnly": "npm run -s build",
     "bundlesize": "bundlesize",
     "release": "release-it minor",
@@ -43,6 +43,7 @@
     "mocha": "^4.0.1",
     "nyc": "^13.1.0",
     "release-it": "12.4.3",
+    "rimraf": "3.0.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8",
