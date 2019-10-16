@@ -61,5 +61,8 @@
       "path": "./lib/**/*.js",
       "maxSize": "10 kB"
     }
+  ],
+  "files": [
+    "lib/"
   ]
 }
