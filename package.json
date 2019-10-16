@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run -s build",
     "bundlesize": "bundlesize",
     "release": "npm run build && release-it patch",
-    "release:dry-run": "release-it minor --dry-run"
+    "release:dry-run": "release-it patch --dry-run"
   },
   "keywords": [
     "requestIdleCallback",
