@@ -98,7 +98,7 @@ export default class RouteAnimate extends React.PureComponent {
 ```
 
 ## ChangeLog
-## 0.0.2
+## 0.0.3
 
 * feat: 新增 requestIdlePromise 用于支持 promise 调用
 
