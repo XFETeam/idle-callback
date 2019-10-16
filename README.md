@@ -35,7 +35,7 @@ requestIdleCallback(callback);
 
 #### react 场景
 
-请确保在任何调用 requestIdleCallback 时
+请确保在任何调用 requestIdleCallback 后一定要 cancel 进行回收避免潜在的内存泄漏
 
 ```jsx harmony
 import { requestIdleCallback, cancelIdleCallback } from "@xfe-team/idle-callback";
@@ -63,6 +63,44 @@ export default class RouteAnimate extends React.PureComponent {
   }
 }
 ```
+
+#### 以 promise 的形式进行调用
+
+```jsx harmony
+import { requestIdlePromise } from "@xfe-team/idle-callback";
+
+export default class RouteAnimate extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isIdle: false
+    };
+    this.recycleQueue = [];
+  }
+  
+  async componentDidMount() {
+    const { promise, cancel } = requestIdlePromise({ timeout: 200 /* 给一个超时时间 */ });
+    this.recycleQueue.push(cancel);
+    await promise;
+    this.setState({ isIdle: true })
+  }
+  
+  componentWillUnmount() {
+    this.recycleQueue.forEach(recycle => recycle());
+  }
+
+  render() {
+    return (
+      ...
+    );
+  }
+}
+```
+
+## ChangeLog
+## 0.0.2
+
+* feat: 新增 requestIdlePromise 用于支持 promise 调用
 
 ## ChangeLog
 ## 0.0.1

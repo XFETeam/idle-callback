@@ -1,3 +1,9 @@
+// noinspection JSUnresolvedVariable
+/**
+ * 空闲时段内调用的函数, 启动调度函数
+ * https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback
+ * @type {function(*): number}
+ */
 const requestIdleCallback = (window.requestIdleCallback =
   window.requestIdleCallback ||
   function (handler) {
@@ -13,10 +19,36 @@ const requestIdleCallback = (window.requestIdleCallback =
     }, 1);
   });
 
+// noinspection JSUnresolvedVariable
+/**
+ * 空闲时段内调用的函数, 取消调度函数
+ * https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback
+ * @type {function(*): number}
+ */
 const cancelIdleCallback = (window.cancelIdleCallback =
   window.cancelIdleCallback ||
   function (id) {
     clearTimeout(id);
   });
 
-export { requestIdleCallback, cancelIdleCallback };
+/**
+ * 空闲时段内调用的函数, 启动调度函数
+ * e.g.
+ * await requestIdlePromise().promise
+ *
+ * @returns {{cancel: cancel, promise: Promise<any>}}
+ */
+const requestIdlePromise = (options) => {
+  let requestIdleCallbackHook;
+
+  return {
+    promise: new Promise(resolve => {
+      requestIdleCallbackHook = window.requestIdleCallback(resolve, options);
+    }),
+    cancel: () => {
+      cancelIdleCallback(requestIdleCallbackHook);
+    }
+  };
+};
+
+export { requestIdleCallback, cancelIdleCallback, requestIdlePromise };
